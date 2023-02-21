@@ -1,14 +1,21 @@
 import logo from "./logo.svg";
 import "./App.css";
+import Score from "./Score";
+import Game from "./Game";
+import { useState } from "react";
 
-const value1 = Math.floor(Math.random() * 100);
-const value2 = Math.floor(Math.random() * 100);
-const value3 = Math.floor(Math.random() * 100);
-const proposedAnswer = Math.floor(Math.random() * 3) + value1 + value2 + value3;
-const numQuestions = 0;
-const numCorrect = 0;
 
 const App = () => {
+  const [numQuestions, setNumQuestions] = useState(0);
+  const [numCorrect, setNumCorrect] = useState(0);
+
+  const answerHandler = (correctAnswer) => {
+    if (correctAnswer) {
+      setNumCorrect(numCorrect + 1);
+    }
+    setNumQuestions(numQuestions + 1);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -17,14 +24,8 @@ const App = () => {
       </header>
       <div className="game">
         <h2>Mental Math</h2>
-        <div className="equation">
-          <p className="text">{`${value1} + ${value2} + ${value3} = ${proposedAnswer}`}</p>
-        </div>
-        <button>True</button>
-        <button>False</button>
-        <p className="text">
-          Your Score: {numCorrect}/{numQuestions}
-        </p>
+        <Game answerHandler={answerHandler}/>
+        <Score numCorrect={numCorrect} numQuestions={numQuestions} />
       </div>
     </div>
   );
